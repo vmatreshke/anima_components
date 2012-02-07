@@ -11,10 +11,14 @@ $arParams["OK_TEXT"] = trim($arParams["OK_TEXT"]);
 if(strlen($arParams["OK_TEXT"]) <= 0)
 	$arParams["OK_TEXT"] = GetMessage("MF_OK_MESSAGE");
 
+
+//die("olil");
+
 if($_SERVER["REQUEST_METHOD"] == "POST" && strlen($_POST["submit"]) > 0)
 {
 	if(check_bitrix_sessid())
 	{
+
 		if(empty($arParams["REQUIRED_FIELDS"]) || !in_array("NONE", $arParams["REQUIRED_FIELDS"]))
 		{
 			if((empty($arParams["REQUIRED_FIELDS"]) || in_array("NAME", $arParams["REQUIRED_FIELDS"])) && strlen($_POST["user_name"]) <= 1)
@@ -49,7 +53,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && strlen($_POST["submit"]) > 0)
 			else
 				$arResult["ERROR_MESSAGE"][] = GetMessage("MF_CAPTHCA_EMPTY");
 
-		}			
+		}
 		if(empty($arResult))
 		{
 			$arFields = Array(
