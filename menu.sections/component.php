@@ -33,7 +33,7 @@ if($this->StartResultCache())
             }
 
             if($arParams["INCLUDE_SECTIONS"]) {
-                $dbSections = CIBlockSection::GetList(array("left_margin"=>"asc"), array("IBLOCK_ID" => $arParams["IBLOCK_ID"]), true, array("NAME", "SECTION_PAGE_URL", "DEPTH_LEVEL"));
+                $dbSections = CIBlockSection::GetList(array("left_margin"=>"asc"), array("ACTIVE" => "Y", "GLOBAL_ACTIVE" => "Y", "IBLOCK_ID" => $arParams["IBLOCK_ID"]), true, array("NAME", "SECTION_PAGE_URL", "DEPTH_LEVEL"));
                 $dbSections->SetUrlTemplates("", $arIBlock["SECTION_PAGE_URL"]);
                 while($arSection = $dbSections->GetNext()) {
                     $current_depth = $arSection["DEPTH_LEVEL"];
@@ -46,7 +46,7 @@ if($this->StartResultCache())
                     );
 
                     if($arParams["INCLUDE_ELEMENTS"]) {
-                        $dbElements = CIBlockElement::GetList(array("SORT" => "DESC"), array("IBLOCK_ID" => $arParams["IBLOCK_ID"], "SECTION_ID" => $arSection["ID"]), false, false, array("NAME", "DETAIL_PAGE_URL"));
+                        $dbElements = CIBlockElement::GetList(array("SORT" => "DESC"), array("ACTIVE" => "Y", "SECTION_GLOBAL_ACTIVE" => "Y", "IBLOCK_ID" => $arParams["IBLOCK_ID"], "SECTION_ID" => $arSection["ID"]), false, false, array("NAME", "DETAIL_PAGE_URL"));
                         $dbElements->SetUrlTemplates($arIBlock["DETAIL_PAGE_URL"]);
                         while($arElement = $dbElements->GetNext()) {
                             $current_depth = $arSection["DEPTH_LEVEL"]+1;
