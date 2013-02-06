@@ -89,7 +89,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && strlen($_POST["submit"]) > 0)
                 }
             }
 
-			LocalRedirect($APPLICATION->GetCurPageParam("success=Y#mfeedback".($arParams["ALLOW_SCROLLDOWN"] !== "N" ? "#mfeedback" : ""), Array("success")));
+			//LocalRedirect($APPLICATION->GetCurPageParam("success=Y#mfeedback".($arParams["ALLOW_SCROLLDOWN"] !== "N" ? "#mfeedback" : ""), Array("success")));
+            if($arParams['ALLOW_REDIRECT'] !== 'N') {
+                if($arParams["REDIRECT_URL"])
+                    LocalRedirect($arParams["REDIRECT_URL"]);
+                else
+                    LocalRedirect($APPLICATION->GetCurPageParam("success=Y".($arParams["ALLOW_SCROLLDOWN"] !== "N" ? "#mfeedback" : ""), Array("success")));
+            } else {
+                $arResult["OK_MESSAGE"] = $arParams["OK_TEXT"];
+            }
 		}
 		
 		$arResult["MESSAGE"] = htmlspecialcharsEx($_POST["MESSAGE"]);
